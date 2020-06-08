@@ -1,5 +1,6 @@
 using System;
 using App.Areas.Identity.Data;
+using App.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -21,7 +22,7 @@ namespace App.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("AppIdentityDbContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>()
+                services.AddDefaultIdentity<ApplicationUser>()
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<AppIdentityDbContext>();
 

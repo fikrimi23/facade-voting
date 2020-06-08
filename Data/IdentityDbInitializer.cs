@@ -1,15 +1,16 @@
 using App.Enum;
+using App.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace app.Data
 {
     public class IdentityDbInitializer
     {
-        public static void SeedUsers(UserManager<IdentityUser> userManager)
+        public static void SeedUsers(UserManager<ApplicationUser> userManager)
         {
             if (userManager.FindByEmailAsync("gamer.fikri@gmail.com").Result == null)
             {
-                IdentityUser user = new IdentityUser
+                ApplicationUser user = new ApplicationUser
                 {
                     UserName = "gamer.fikri@gmail.com",
                     Email = "gamer.fikri@gmail.com"
