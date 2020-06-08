@@ -69,3 +69,9 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.dataTables_wrapper .row:first-child,
+.dataTables_wrapper .row:last-child {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}

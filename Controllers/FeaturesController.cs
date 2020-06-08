@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using App.Data;
 using App.Models;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace App.Controllers
 {
@@ -20,13 +21,19 @@ namespace App.Controllers
         }
 
         // GET: Features
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int categoryId)
         {
-            return View(
-                await _context.Feature
-                    .Include(m => m.Category)
-                    .ToListAsync()
-            );
+            ViewData["Categories"] = new SelectList(_context.Category, "Id", "Title");
+            var features = from f in _context.Feature select f;
+
+            if (categoryId != 0)
+            {
+                features = features.Where(s => s.CategoryId == categoryId);
+            }
+
+            return View(await features
+                .Include(m => m.Category)
+                .ToListAsync());
         }
 
         // GET: Features/Details/5
@@ -98,7 +105,8 @@ namespace App.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,DueDate,CategoryId")] Feature feature)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,DueDate,CategoryId")]
+            Feature feature)
         {
             if (id != feature.Id)
             {
