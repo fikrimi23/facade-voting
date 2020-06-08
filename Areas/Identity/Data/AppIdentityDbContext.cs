@@ -17,6 +17,8 @@ namespace App.Areas.Identity.Data
 
         public DbSet<Feature> Feature { get; set; }
 
+        public DbSet<UserVote> UserVote { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

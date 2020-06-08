@@ -1,6 +1,9 @@
+using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using App.Areas.Identity.Data;
+using App.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -39,13 +42,41 @@ namespace App.Controllers
         }
 
         [Authorize]
-        public IActionResult Upvote(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Upvote(int? id)
         {
-            throw new System.NotImplementedException();
+            if (id == null) return NotFound();
+
+            var feature = await _context.Feature.FindAsync(id);
+            if (feature == null) return NotFound();
+// Check features -> users() exists
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userVotes = from uv in _context.UserVote select uv;
+            var exists = userVotes
+                .Where(uv => uv.FeatureId == id)
+                .Any(u => u.UserId == userId);
+
+            if (!exists)
+            {
+                feature.VoteCount++;
+                var userVote = new UserVote
+                {
+                    FeatureId = feature.Id,
+                    UserId = userId,
+                    CreatedAt = DateTime.Now
+                };
+                _context.Add(userVote);
+                _context.Update(feature);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
-        
+
         [Authorize]
-        public IActionResult Downvote(int? id)
+        public Task<IActionResult> Downvote(int id)
         {
             throw new System.NotImplementedException();
         }

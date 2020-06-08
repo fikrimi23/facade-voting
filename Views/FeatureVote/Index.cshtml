@@ -6,7 +6,7 @@
 
 <h2>Vote Your Favorite Feature Below</h2>
 
-<form id="feature-vote-form"></form>
+<form id="feature-vote-form" method="post"></form>
 @foreach (var item in Model)
 {
     <div class="row pb-2">
@@ -24,10 +24,10 @@
                         <small>@item.Description</small>
                     </div>
                     <div class="col-sm-2 text-right">
-                        <button form="feature-vote-form" formaction="@Url.Action("Upvote", "FeatureVote", item.Id)" class="btn btn-primary btn-sm">
+                        <button form="feature-vote-form" formaction="@Url.Action("Upvote", "FeatureVote", new {item.Id})" class="btn btn-primary btn-sm">
                             <i class="fas fa-arrow-up"></i>
                         </button>
-                        <button form="feature-vote-form" formaction="@Url.Action("Downvote", "FeatureVote", item.Id)" class="btn btn-primary btn-sm">
+                        <button form="feature-vote-form" formaction="@Url.Action("Downvote", "FeatureVote", new {item.Id})" class="btn btn-primary btn-sm">
                             <i class="fas fa-arrow-down"></i>
                         </button>
                     </div>
