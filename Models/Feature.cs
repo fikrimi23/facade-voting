@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using App.Models.Validations;
 
 namespace App.Models
 {
@@ -27,6 +28,7 @@ namespace App.Models
         [DisplayName("Due Date")]
         [DisplayFormat(DataFormatString = "{0:d MMMM yyyy}")]
         [Required]
+        [DateGreaterThanOrEqualToToday]
         public DateTime DueDate { get; set; }
 
         [Required]
