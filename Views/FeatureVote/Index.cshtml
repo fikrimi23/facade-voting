@@ -1,0 +1,38 @@
+@model IEnumerable<App.Models.Feature>
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Vote Your Favorite Feature Below</h2>
+
+<form id="feature-vote-form"></form>
+@foreach (var item in Model)
+{
+    <div class="row pb-2">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body row">
+                    <div class="col-sm-1 text-center" style="border-right: 1px solid; font-size: 1.2rem">
+                        @item.VoteCount
+                    </div>
+                    <div class="col-sm-9">
+                        <a asp-controller="FeatureVote" asp-action="Details">
+                            @item.Title
+                        </a>
+                        <br>
+                        <small>@item.Description</small>
+                    </div>
+                    <div class="col-sm-2 text-right">
+                        <button form="feature-vote-form" formaction="@Url.Action("Upvote", "FeatureVote", item.Id)" class="btn btn-primary btn-sm">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button form="feature-vote-form" formaction="@Url.Action("Downvote", "FeatureVote", item.Id)" class="btn btn-primary btn-sm">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

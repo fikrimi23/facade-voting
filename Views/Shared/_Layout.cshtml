@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - Facade Features</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/lib/datatables/datatables.min.css"/>
+    <link rel="stylesheet" href="~/lib/fontawesome5/all.min.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
 </head>
 <body>
@@ -25,7 +26,7 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Vote Now</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="FeatureVote" asp-action="Index">Vote Now</a>
                     </li>
                     <li asp-authorize asp-policy="RequireAdmin" class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
