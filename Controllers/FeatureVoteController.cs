@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using App.Data;
+using App.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +9,9 @@ namespace App.Controllers
 {
     public class FeatureVoteController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AppIdentityDbContext _context;
 
-        public FeatureVoteController(ApplicationDbContext context)
+        public FeatureVoteController(AppIdentityDbContext context)
         {
             _context = context;
         }

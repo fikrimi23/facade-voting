@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Areas.Identity.Data;
-using app.Data;
 using App.Data;
 using App.Enum;
 using App.Models;
@@ -34,10 +33,6 @@ namespace App
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddDbContext<AppIdentityDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });
-            services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });

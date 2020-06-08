@@ -2,7 +2,7 @@ using App.Enum;
 using App.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace app.Data
+namespace App.Data
 {
     public class IdentityDbInitializer
     {

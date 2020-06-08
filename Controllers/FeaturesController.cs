@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using App.Data;
+using App.Areas.Identity.Data;
 using App.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +13,9 @@ namespace App.Controllers
     [Authorize(Policy = "RequireAdmin")]
     public class FeaturesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AppIdentityDbContext _context;
 
-        public FeaturesController(ApplicationDbContext context)
+        public FeaturesController(AppIdentityDbContext context)
         {
             _context = context;
         }

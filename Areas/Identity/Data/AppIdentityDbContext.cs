@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using App.Enum;
 using App.Models;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +13,10 @@ namespace App.Areas.Identity.Data
         {
         }
 
+        public DbSet<Category> Category { get; set; }
+
+        public DbSet<Feature> Feature { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -28,14 +28,27 @@ namespace App.Areas.Identity.Data
             {
                 Id = Role.Admin,
                 Name = Role.Admin,
-                NormalizedName = Role.Admin.ToUpper(),
+                NormalizedName = Role.Admin.ToUpper()
             });
             builder.Entity<IdentityRole>().HasData(new IdentityRole
             {
                 Id = Role.User,
                 Name = Role.User,
-                NormalizedName = Role.User.ToUpper(),
+                NormalizedName = Role.User.ToUpper()
             });
+
+            builder.Entity<UserVote>()
+                .HasKey(uv => new {uv.UserId, uv.FeatureId});
+
+            builder.Entity<UserVote>()
+                .HasOne(uv => uv.User)
+                .WithMany(p => p.VotedFeatures)
+                .HasForeignKey(pt => pt.UserId);
+
+            builder.Entity<UserVote>()
+                .HasOne(uv => uv.Feature)
+                .WithMany(p => p.Voters)
+                .HasForeignKey(pt => pt.FeatureId);
         }
     }
 }

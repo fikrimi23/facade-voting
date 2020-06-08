@@ -35,5 +35,7 @@ namespace App.Models
         public int CategoryId { get; set; }
 
         public Category Category { get; set; }
+
+        public IEnumerable<UserVote> Voters { get; set; }
     }
 }
