@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Areas.Identity.Data;
+using App.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,7 +31,11 @@ namespace App
             services.AddRazorPages();
             services.AddDbContext<AppIdentityDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("AppIdentityDbContext"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
         }
 
