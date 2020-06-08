@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using App.Enum;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,19 @@ namespace App.Areas.Identity.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+
+            builder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = Role.Admin,
+                Name = Role.Admin,
+                NormalizedName = Role.Admin.ToUpper(),
+            });
+            builder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = Role.User,
+                Name = Role.User,
+                NormalizedName = Role.User.ToUpper(),
+            });
         }
     }
 }
