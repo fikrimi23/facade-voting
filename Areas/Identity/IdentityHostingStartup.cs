@@ -8,19 +8,31 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: HostingStartup(typeof(App.Areas.Identity.IdentityHostingStartup))]
+
 namespace App.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
+            builder.ConfigureServices((context, services) =>
+            {
                 services.AddDbContext<AppIdentityDbContext>(options =>
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("AppIdentityDbContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<IdentityUser>()
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<AppIdentityDbContext>();
+
+                services.Configure<IdentityOptions>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequiredUniqueChars = 0;
+                    options.Password.RequiredLength = 8;
+                });
             });
         }
     }

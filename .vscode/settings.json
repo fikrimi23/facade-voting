@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/281a4f2a-ea4f-4ec6-8a66-be5fc2a70437/resourceGroups/Xtremax/providers/Microsoft.Web/sites/facade-voting",
+    "appService.deploySubpath": "publish"
+}

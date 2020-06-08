@@ -1,16 +1,16 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using App.Data;
+using App.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using App.Data;
-using App.Models;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace App.Controllers
 {
+    [Authorize(Policy = "RequireAdmin")]
     public class FeaturesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,10 +26,7 @@ namespace App.Controllers
             ViewData["Categories"] = new SelectList(_context.Category, "Id", "Title");
             var features = from f in _context.Feature select f;
 
-            if (categoryId != 0)
-            {
-                features = features.Where(s => s.CategoryId == categoryId);
-            }
+            if (categoryId != 0) features = features.Where(s => s.CategoryId == categoryId);
 
             return View(await features
                 .Include(m => m.Category)
@@ -39,18 +36,12 @@ namespace App.Controllers
         // GET: Features/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var feature = await _context.Feature
                 .Include(m => m.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (feature == null)
-            {
-                return NotFound();
-            }
+            if (feature == null) return NotFound();
 
             return View(feature);
         }
@@ -79,22 +70,16 @@ namespace App.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return this.Create();
+            return Create();
         }
 
         // GET: Features/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var feature = await _context.Feature.FindAsync(id);
-            if (feature == null)
-            {
-                return NotFound();
-            }
+            if (feature == null) return NotFound();
 
             ViewData["Categories"] = new SelectList(_context.Category, "Id", "Title");
             return View(feature);
@@ -108,10 +93,7 @@ namespace App.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,DueDate,CategoryId")]
             Feature feature)
         {
-            if (id != feature.Id)
-            {
-                return NotFound();
-            }
+            if (id != feature.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -123,41 +105,31 @@ namespace App.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!FeatureExists(feature.Id))
-                    {
                         return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
 
                 return RedirectToAction(nameof(Index));
             }
 
-            return await this.Edit(id);
+            return await Edit(id);
         }
 
         // GET: Features/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var feature = await _context.Feature
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (feature == null)
-            {
-                return NotFound();
-            }
+            if (feature == null) return NotFound();
 
             return View(feature);
         }
 
         // POST: Features/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
