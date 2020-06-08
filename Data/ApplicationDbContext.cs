@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using App.Models;
 
 namespace App.Data
 {
@@ -10,5 +11,7 @@ namespace App.Data
         }
 
         public DbSet<App.Models.Category> Category { get; set; }
+
+        public DbSet<App.Models.Feature> Feature { get; set; }
     }
 }
