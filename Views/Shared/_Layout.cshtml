@@ -25,9 +25,12 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Vote Now</a>
+                    </li>
+                    <li asp-authorize asp-policy="RequireAdmin" class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
                     </li>
-                    <li class="nav-item">
+                    <li asp-authorize asp-policy="RequireAdmin" class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Features" asp-action="Index">Features</a>
                     </li>
                 </ul>
